@@ -1,0 +1,1 @@
+# plugins-th-product-compare
