@@ -4,9 +4,18 @@
   align-items: center;
   position: relative;
 }
+.th-atleast{
+  font-size: 18px;
+  color: #FFF;
+  max-width: 152px;
+  margin: 0;
+}
 .th-product-compare-btn.txt_type {
   color: #3575e9;
   font-weight: bold;
+}
+.th-product-compare-btn-wrap{
+  text-align: center;
 }
 .th-product-compare-btn-wrap .th-product-compare-btn.btn_type {
   color: inherit;
@@ -14,10 +23,17 @@
   background-color: transparent;
   line-height: 1;
   text-align: inherit;
+  text-decoration: none;
+  outline: 0;
+  border: 0;
 }
 .th-product-compare-btn.btn_type.th-added-compare::before {
   content: "\f15e";
   font-family: "dashicons";
+  background: #111;
+    color: #FFF;
+    border-radius: 5px;
+    margin-right: 9px;
 }
 /* .th-product-compare-btn.loading {
   pointer-events: none;
@@ -444,30 +460,10 @@
   border-radius: 10px;
 }
 
-@media screen and (max-width: 450px) {
-  .th-compare-output-product .product-table-configure td {
-    min-width: unset;
-  }
-  .th-compare-output-product .product-table-configure td.left-title {
-    padding: 10px;
-  }
-  .th-compare-output-product .product-table-configure td.left-title span {
-    font-size: 16px;
-  }
-  .th-compare-output-product
-    .product-table-configure
-    .image
-    .image-and-addcart
-    .img_ {
-    min-width: unset;
-    max-width: 60px;
-    max-height: 80px;
-  }
-}
 .th-compare-footer-wrap {
   position: fixed;
   z-index: 1000000000;
-  background-color: white;
+  background-color: #0000007a;
   width: 100%;
   bottom: -150px;
   transition: 0.8s all ease;
@@ -496,9 +492,10 @@
   align-items: center;
   transform: translatex(-50%);
   left: 50%;
-  background-color: inherit;
+  background-color: #111;
   grid-gap: 8px;
-  color: #464646;
+  color: #FFF;
+  cursor: pointer;
   border: none;
   font-weight: 700;
   letter-spacing: 0.03rem;
@@ -535,6 +532,7 @@
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.03rem;
+  text-decoration: none;
 }
 .th-compare-footer-wrap > div .th-add-product-bar i {
   height: unset;
@@ -554,13 +552,14 @@
   max-width: 100%;
   overflow: auto;
   padding: 10px;
+  min-width: 700px;
 }
 .th-compare-footer-wrap > div .product_image .img_ {
-  width: 110px;
-  height: 110px;
-  min-width: 110px;
+  width: 90px;
+  height: 90px;
+  min-width: 90px;
   position: relative;
-  background: #dbdbdb;
+  background: transparent;
   border-radius: 3px;
   display: flex;
   align-items: center;
@@ -620,6 +619,7 @@
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.03rem;
+  text-decoration: none;
 }
 .th-compare-footer-wrap
   > div
@@ -920,6 +920,30 @@
 }
 
 @media screen and (max-width: 450px) {
+  .th-compare-footer-wrap > div .product_image{
+    min-width: initial;
+  }
+    .th-compare-output-product .product-table-configure td {
+    min-width: unset;
+  }
+  .th-compare-output-product .product-table-configure td.left-title {
+    padding: 10px;
+  }
+  .th-compare-output-product .product-table-configure td.left-title span {
+    font-size: 16px;
+  }
+  .th-compare-output-product
+    .product-table-configure
+    .image
+    .image-and-addcart
+    .img_ {
+    min-width: unset;
+    max-width: 60px;
+    max-height: 80px;
+  }
+  .th-atleast{
+    display: none;
+  }
   .th-compare-footer-wrap > div {
     padding: 0 10px;
     justify-content: space-between;
@@ -969,3 +993,217 @@
     margin-bottom: 4px;
   }
 }
+
+.product_image .empty-slot {
+    width: 50px;
+    height: 50px;
+    background: #f7f7f7;
+    border: 2px dashed #ccc;
+    display: inline-block;
+    margin-right: 5px;
+    border-radius: 5px;
+}
+/* Compare Styling with checkbox feature Start*/
+/* Checkbox Wrapper */
+.th-product-compare-checkbox-wrap {
+    margin: 9px 0;
+}
+/* Checkbox Label */
+.th-compare-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    font-weight: 400;
+    line-height: 1.5;
+    justify-content: center;
+}
+.single-product .th-compare-label{
+  justify-content: flex-start;
+}
+/* Checkbox Styling */
+.th-product-compare-checkbox {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #111;
+    border-radius: 4px;
+    outline: none;
+    margin-right: 8px;
+    background-color: #fff;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Checkbox Checked */
+.th-product-compare-checkbox:checked {
+    background-color: green;
+    border-color: green;
+}
+
+/* Checkbox Checkmark */
+.th-product-compare-checkbox:checked::after {
+    content: '\2713';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Checkbox Hover */
+.th-product-compare-checkbox:hover {
+    border-color: #005177;
+}
+
+/* Checkbox Focus */
+/*.th-product-compare-checkbox:focus {
+    box-shadow: 0 0 0 2px rgba(0, 115, 170, 0.3);
+}*/
+
+/* Checkbox Loading */
+.th-product-compare-checkbox.loading {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+/* Checkbox Added */
+.th-product-compare-checkbox.th-added-compare {
+    border-color: green;
+}
+
+/* Icon Wrapper */
+.thunk-compare {
+   width: max-content;
+   margin: 0 auto;
+}
+.single-product .thunk-compare{
+  width: initial;
+  display: flex;
+}
+/* Tooltip Wrapper */
+.compare-tooltip {
+    position: relative;
+}
+
+/* Icon Button */
+.th-product-compare-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    background-color: transparent;
+    border: 0;
+    border-radius: 4px;
+    color: #111;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 1.5;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.th-product-compare-btn-wrap a.th-product-compare-btn{
+  background: transparent;
+  text-decoration: none;
+}
+.thunk-content-wrap .entry-content .th-product-compare-btn-wrap a.th-product-compare-btn{
+  text-decoration: none;
+}
+/* Icon */
+.th-product-compare-btn .th-icon-repeat {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+    background: url('path-to-icon-repeat.svg') no-repeat center; /* Replace with actual icon path */
+    background-size: contain;
+}
+
+/* Icon Text */
+.th-product-compare-btn .text {
+    display: inline;
+    margin-left: 9px;
+}
+
+/* Icon Hover */
+/*.th-product-compare-btn:hover {
+    background-color: #e6f0fa;
+    border-color: #005177;
+    color: #005177;
+}*/
+
+.th-product-compare-btn:hover .th-icon-repeat {
+    background: url('path-to-icon-repeat-hover.svg') no-repeat center; /* Replace with hover icon path */
+    background-size: contain;
+}
+
+/* Icon Added */
+.th-product-compare-btn.th-added-compare {
+    pointer-events: none;
+    opacity: .7;
+}
+
+.th-product-compare-btn.th-added-compare .th-icon-repeat {
+    background-size: contain;
+}
+
+/* Icon Loading */
+.th-product-compare-btn.loading {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+/* Icon Focus */
+.th-product-compare-btn:focus {
+    box-shadow: 0 0 0 2px rgba(0, 115, 170, 0.3);
+    outline: none;
+}
+
+/* Tooltip Styling */
+.compare-tooltip:hover:after {
+    content: attr(th-tooltip);
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .th-product-compare-checkbox {
+        width: 18px;
+        height: 18px;
+    }
+    .th-compare-label {
+        font-size: 13px;
+    }
+    .th-product-compare-btn {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+    .th-product-compare-btn .th-icon-repeat {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* Error Message for Invalid Shortcode */
+.th-compare-error {
+    color: #d63638;
+    font-size: 14px;
+}
+/* Compare Styling with checkbox feature End*/

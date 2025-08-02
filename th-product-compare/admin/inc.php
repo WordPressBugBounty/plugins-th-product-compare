@@ -83,6 +83,10 @@ class th_product_compare
                 'documentation' => '<a href="' . esc_url('https://themehunk.com/docs/th-product-compare-pro/') . '" target="_blank">' . __('Documentation', 'th-product-compare') . '</a>',
                 'support' => '<a href="' . esc_url('https://themehunk.com/contact-us/') . '" target="_blank">' . __('Support', 'th-product-compare') . '</a>',
                 'premium_version' => '<a href="' . esc_url('https://themehunk.com/th-product-compare-plugin/') . '" target="_blank">' . __('Premium Version', 'th-product-compare') . '</a>',
+                
+                'rating'           => '<a href="' . esc_url('https://wordpress.org/support/plugin/th-product-compare/reviews/?filter=5') . '" target="_blank" rel="noopener noreferrer" title="' . esc_attr__('Rate us on WordPress.org', 'th-product-compare') . '" style="color: #ffb900;">'
+                                . str_repeat('<span class="dashicons dashicons-star-filled" style="font-size: 16px; width:16px; height: 16px;"></span>', 5)
+                                . '</a>',
             );
             $plugin_meta = array_merge($plugin_meta, $new_links);
         }
@@ -119,7 +123,7 @@ class th_product_compare
     {
         wp_enqueue_style('dashicons');
         wp_enqueue_style('th-product-compare-style-front', TH_PRODUCT_URL . 'assets/fstyle.css', false);
-        wp_enqueue_script('th-product-js', TH_PRODUCT_URL . 'assets/js/fscript.js', array('jquery'), 1, true);
+        wp_enqueue_script('th-product-js', TH_PRODUCT_URL . 'assets/js/fscript.js', array('jquery'), 1, array('in_footer' => true,'strategy'  => 'async',));
         wp_localize_script('th-product-js', 'th_product', array('th_product_ajax_url' => admin_url('admin-ajax.php')));
     }
     public static function th_decrypt($string, $key = 12345)
