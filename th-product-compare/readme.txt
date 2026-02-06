@@ -3,8 +3,8 @@ Contributors: ThemeHunk
 Author URI: : https://www.themehunk.com/
 Tags: compare, woocommerce compare, compare product, product compare, product comparison
 Requires at least: 5.0
-Tested up to: 6.8
-Stable tag: 1.3.4
+Tested up to: 6.9
+Stable tag: 1.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,8 +90,24 @@ It is compatible with all [ThemeHunk themes](https://themehunk.com/free-themes/)
 Yes, You can translate our plugin to desired language.
 
 == Screenshots ==
+1. Dashboard
+2. Compare Table
+3. Compare single Product
+4. Add product
+5. Pro Version
 
 == Changelog ==
+
+= 1.3.6 =
+* New: Added a new sticky header style with improved scrolling behavior.
+* Update: Improved frontend UI for better usability and compatibility.
+* Update: Admin area UI improvements.
+* date: Added a glass-style design to the frontend.
+* date: Changed WooCommerce hook from woocommerce_after_add_to_cart_form to woocommerce_after_add_to_cart_button in admin/front/front.php.
+* emoved: Removed the toggle compare button option and introduced a new style.
+
+= 1.3.5 =
+*Update:  Themehunk plugins page style improved.
 
 = 1.3.4 =
 * New: If no products in footer bar then footer popup should be closed feature added.
@@ -179,10 +195,8 @@ Initial release
 
 == Upgrade Notice ==
 
-= 1.3.2 =
-* Update : Tested with WordPress 6.8.
-* Update : Premium link & get pro link changed.
-* Update : Compare Button background removed and color inherited.
+= 1.3.5 =
+*Update:  Themehunk plugins page style improved.
  
 = 1.0.0 =
 Initial release

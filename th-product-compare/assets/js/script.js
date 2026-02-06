@@ -3,7 +3,53 @@
     init: function () {
       TH.bind();
       TH.tab();
+      TH.mainTabheader();
+      TH.copyToClip();
     },
+     mainTabheader: function () {
+      jQuery(document).ready(function($) {
+    // When the page loads or a new tab is clicked
+    $('.th-nav_ a').on('click', function(e) {
+        e.preventDefault(); // Prevent default link behavior
+        
+        // Get the content of the active link
+        var activeContent = $('.th-nav_ a.active').text(); // You can also use .html() if you need the HTML content
+
+        // Replace the content inside .tabheading with the active link content
+        $('.tabheading').text(activeContent);
+    });
+});
+
+    },
+         copyToClip: function () {
+
+            $('.th-copy-btn').on('click', function () {
+
+                  var button = $(this);
+                  var targetId = button.data('copy-target');
+                  var textToCopy = $('#' + targetId).text();
+
+                  // Create temporary input
+                  var tempInput = $('<input>');
+                  $('body').append(tempInput);
+                  tempInput.val(textToCopy).select();
+
+                  document.execCommand('copy');
+                  tempInput.remove();
+
+                  // UI Feedback
+                  button.text('Copied!');
+                  button.addClass('copied');
+
+                  setTimeout(function () {
+                      button.text('Copy');
+                      button.removeClass('copied');
+                  }, 1500);
+
+              });
+
+    },
+
     tab: function () {
       $("[data-group-tabs][data-tab]").click(function (e) {
         e.preventDefault();
