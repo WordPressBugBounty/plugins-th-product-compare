@@ -11,40 +11,92 @@ class th_product_compare_return
         add_action('wp_ajax_th_get_compare_product', array($this, 'get_products'));
         add_action('wp_ajax_nopriv_th_get_compare_product', array($this, 'get_products'));
     }
-    public function get_products()
-    {
-        if ( isset($_POST['product_id']) && ( intval($_POST['product_id']) || $_POST['product_id'] === 'refresh' ) ) {
+    // public function get_products()
+    // {
+    //     /* ---------- NONCE CHECK (BEST WAY) ---------- */
+    // check_ajax_referer( 'th_product_compare_nonce', 'nonce' );
 
-            $productID = $_POST['product_id'] === 'refresh' ? 'refresh' : intval($_POST['product_id']);
+    //     if ( isset($_POST['product_id']) && ( intval($_POST['product_id']) || $_POST['product_id'] === 'refresh' ) ) {
 
-            $addREmove = sanitize_text_field($_POST['add_remove']);
+    //         $productID = $_POST['product_id'] === 'refresh' ? 'refresh' : intval($_POST['product_id']);
 
-            $setID = $this->setId_cookie($productID, $addREmove);
+    //         $addREmove = sanitize_text_field($_POST['add_remove']);
 
-            if (!empty($setID)) {
+    //         $setID = $this->setId_cookie($productID, $addREmove);
 
-                $html = $this->productHtml($setID);
+    //         if (!empty($setID)) {
 
-                if (isset($setID['product_limit'])) {
+    //             $html = $this->productHtml($setID);
 
-                    $html['product_limit'] = __('Product Limit Exceeded.', 'th-product-compare');
+    //             if (isset($setID['product_limit'])) {
 
-                }
+    //                 $html['product_limit'] = __('Product Limit Exceeded.', 'th-product-compare');
 
-                $return = $html;
+    //             }
 
-            } else {
+    //             $return = $html;
 
-                $return = ['no_product' => 1];
+    //         } else {
 
-            }
+    //             $return = ['no_product' => 1];
 
-            wp_send_json($return);
+    //         }
 
+    //         wp_send_json($return);
+
+    //     }
+
+    // }
+    
+    public function get_products() {
+
+    /* ---------- NONCE CHECK (BEST WAY) ---------- */
+    check_ajax_referer( 'th_product_compare_nonce', 'nonce' );
+
+    /* ---------- PRODUCT ID ---------- */
+    if ( ! isset( $_POST['product_id'] ) ) {
+        wp_send_json_error( array( 'message' => __( 'Missing product id', 'th-product-compare' ) ) );
+    }
+
+    $raw_product = sanitize_text_field( wp_unslash( $_POST['product_id'] ) );
+
+    if ( 'refresh' === $raw_product ) {
+        $productID = 'refresh';
+    } else {
+        $productID = intval( $raw_product );
+        if ( $productID <= 0 ) {
+            wp_send_json_error( array( 'message' => __( 'Invalid product id', 'th-product-compare' ) ) );
+        }
+    }
+
+    /* ---------- ACTION ---------- */
+    if ( ! isset( $_POST['add_remove'] ) ) {
+        wp_send_json_error( array( 'message' => __( 'Missing action', 'th-product-compare' ) ) );
+    }
+
+    $addREmove = sanitize_text_field( wp_unslash( $_POST['add_remove'] ) );
+
+    /* ---------- PROCESS ---------- */
+    $setID = $this->setId_cookie( $productID, $addREmove );
+
+    if ( ! empty( $setID ) ) {
+
+        $html = $this->productHtml( $setID );
+
+        if ( isset( $setID['product_limit'] ) ) {
+            $html['product_limit'] = __( 'Product Limit Exceeded.', 'th-product-compare' );
         }
 
+        wp_send_json( $html );
+
+    } else {
+
+        wp_send_json( array( 'no_product' => 1 ) );
+
     }
-    
+}
+
+
   public function productHtml($setID, $type_ = [])
 {
 
@@ -79,9 +131,9 @@ class th_product_compare_return
                 $checkCustomAttr = isset($title_value['custom']) ? true : false;
                 $name_ = $checkCustomAttr ? $title_value['label'] : str_replace("-", " ", $title_key);
                 $putHtml = ''; 
-                    $putHtml .= '<tr class="_' . $title_key . '_"><td class="left-title">';
+                    $putHtml .= '<tr class="_' . esc_attr($title_key) . '_"><td class="left-title">';
                     if ($name_ != 'image') {
-                        $putHtml .= '<span>' . __($name_, 'th-product-compare') . '</span>';
+                        $putHtml .= '<span>' . esc_html($name_) . '</span>';
                     }
                     $putHtml .= '</td>';
                 
@@ -95,11 +147,11 @@ class th_product_compare_return
 
  if ($wp_is_mobile) {
    $pd_html .= '<tr class="_product_details_"><td class="left-title">';
-    $pd_html .= '<span>' . esc_html__('Product Details', 'th-product-compare-pro') . '</span>';
+    $pd_html .= '<span>' . esc_html__('Product Details', 'th-product-compare') . '</span>';
     $pd_html .= '</td>';
 } else {
     $pd_html .= '<tr class="_product_details_"><td class="left-title">';
-    $pd_html .= '<span>' . esc_html__('Product Details', 'th-product-compare-pro') . '</span>';
+    $pd_html .= '<span>' . esc_html__('Product Details', 'th-product-compare') . '</span>';
     $pd_html .= '</td>';
 }
 
@@ -118,23 +170,23 @@ $initTitleAndRow = array_merge(
     }
 
     if ($chekBYoption['field-repeat-price']) {
-        
+
             $trRepeatPrice_ = '<tr class="th-price">
-                <td class="left-title"><span>' . __('Price', 'th-product-compare') . '</span></td>';
-        
+                <td class="left-title"><span>' . esc_html__('Price', 'th-product-compare') . '</span></td>';
+
     }
 
     if ($chekBYoption['field-repeat-add-to-cart']) {
-       
+
             $trRepeatAddTocart = '<tr class="th-add-to-cart">
-                 <td class="left-title"><span>' . __('Add To Cart', 'th-product-compare') . '</span></td>';
-        
+                 <td class="left-title"><span>' . esc_html__('Add To Cart', 'th-product-compare') . '</span></td>';
+
     }
 
     if ($removeBtn) {
 
             $trDelete_ = '<tr class="th-delete">
-                 <td class="left-title"><span>' . __('Remove', 'th-product-compare') . '</span></td>';
+                 <td class="left-title"><span>' . esc_html__('Remove', 'th-product-compare') . '</span></td>';
         
     }
 
@@ -152,7 +204,7 @@ $initTitleAndRow = array_merge(
             if (!$product) continue;
             $price_ = '<span class="price_">' . $product->get_price_html() . '</span>';
             $Add_to_cart_ = '<div class="th-add-to-cart_"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart" aria-hidden="true"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>' . $this->add_to_cart($product) . '</div>';
-            $link_ = esc_html(get_permalink($ProductID));
+            $link_ = esc_url(get_permalink($ProductID));
 
             foreach ($initTitleAndRow as $initTitleAndRow_key => $initTitleAndRow_value) {
                 $addMoreHtml = '';
@@ -198,7 +250,7 @@ $initTitleAndRow = array_merge(
                     $addMoreHtml .= '</div>';
                     $addMoreHtml .= '</div>';
                 } elseif ($initTitleAndRow_key == 'title') {
-                    $addMoreHtml .= '<span class="product-title_"><a target="_blank" href="' . $link_ . '">' . $product->get_name() . '</a></span>';
+                    $addMoreHtml .= '<span class="product-title_"><a target="_blank" href="' . $link_ . '">' . esc_html($product->get_name()) . '</a></span>';
                 } elseif ($initTitleAndRow_key == 'price') {
                     $addMoreHtml .= $price_;
                 } elseif ($initTitleAndRow_key == 'add-to-cart') {
@@ -206,7 +258,7 @@ $initTitleAndRow = array_merge(
                 } elseif ($initTitleAndRow_key == 'SKU') {
                     $sku = $product->get_sku();
                     $sku = $sku ? $sku : "-";
-                    $addMoreHtml .= '<span>' . $sku . '</span>';
+                    $addMoreHtml .= '<span>' . esc_html($sku) . '</span>';
                 } elseif ($initTitleAndRow_key == 'availability') {
                     $productNumber = $product->is_in_stock();
                     $productAvailbulity = __('out of stock', 'th-product-compare');
@@ -215,7 +267,7 @@ $initTitleAndRow = array_merge(
                         $productAvailbulity = __('in stock', 'th-product-compare');
                         $StockClass = 'th-in-stoct';
                     }
-                    $addMoreHtml .= '<span class="' . $StockClass . '">' . $productAvailbulity . '</span>';
+                    $addMoreHtml .= '<span class="' . esc_attr($StockClass) . '">' . esc_html($productAvailbulity) . '</span>';
                 } elseif ($initTitleAndRow_key == 'rating') {
                     $rating_ = $this->productRating($product);
                     $rating_ = $rating_ ? $rating_ : "-";
@@ -223,11 +275,11 @@ $initTitleAndRow = array_merge(
                 } elseif ($initTitleAndRow_key == 'description') {
                     $description_ = $product->get_short_description();
                     $description_ = $description_ ? $description_ : "-";
-                    $addMoreHtml .= '<span>' . $description_ . '</span>';
+                    $addMoreHtml .= '<span>' . wp_kses_post($description_) . '</span>';
                 } elseif (isset($initTitleAndRow_value['custom'])) {
                     $customAttrGlobal = $product->get_attribute($initTitleAndRow_key);
                     $customAttrGlobal = $customAttrGlobal ? $customAttrGlobal : '-';
-                    $addMoreHtml .= '<span>' . $customAttrGlobal . '</span>';
+                    $addMoreHtml .= '<span>' . esc_html($customAttrGlobal) . '</span>';
                 }
 
                 $addHtml = '<td>' . $addMoreHtml . '</td>';
@@ -251,16 +303,16 @@ $initTitleAndRow = array_merge(
                 }
             }
             if (isset($trDelete_)) {
-                $trDelete_ .= '<td><button class="th-compare-product-remove" data-th-product-id="' . $ProductID . '"><i class="dashicons dashicons-dismiss"></i>' . __('Remove', 'th-product-compare') . '</button></td>';
+                $trDelete_ .= '<td><button class="th-compare-product-remove" data-th-product-id="' . esc_attr($ProductID) . '"><i class="dashicons dashicons-dismiss"></i>' . esc_html__('Remove', 'th-product-compare') . '</button></td>';
                 if ($CheckLAstProduct) {
                     $trDelete_ .= '</tr>';
                 }
             }
 
             // add to footer
-            $footerProduct .= '<div data-product-id="' . $ProductID . '" class="img_ product-comp">';
-            $footerProduct .= '<i class="th-remove-product th-compare-product-remove" data-th-product-id="' . $ProductID . '"></i>';
-            $footerProduct .= "<a target='_blank' href='" . $link_ . "'>";
+            $footerProduct .= '<div data-product-id="' . esc_attr($ProductID) . '" class="img_ product-comp">';
+            $footerProduct .= '<i class="th-remove-product th-compare-product-remove" data-th-product-id="' . esc_attr($ProductID) . '"></i>';
+            $footerProduct .= "<a target='_blank' href='" . esc_url($link_) . "'>";
             $footerProduct .= $product->get_image();
             $footerProduct .= '</a></div>';
         }
@@ -280,17 +332,15 @@ $initTitleAndRow = array_merge(
 
     // footer bar build
     $footerBArPosition = $chekBYoption['compare-popup-position'];
-    $returnFooter ="<div class='th-compare-footer-wrap active position-" . $footerBArPosition . "'><div class='th-compare-footer-level2'><div class='th-compare-footer-level3'>" .
-                "<div class='th-compare-left'><button class='th-footer-up-down' data-text='" . $chekBYoption['compare-opener-btn-text'] . "'>" .
-                "<span class='text_'>" . $chekBYoption['compare-opener-btn-text'] . "</span>" .
-                "<span class='icon_2 dashicons dashicons-arrow-up-alt2'></span></button>" . 
-                "<p class='th-atleast'><span class='th-selected'>Selected</span><span class='th-select-count'>" . $th_product_atleast_txt . "</span></p>" .
+    $returnFooter ="<div class='th-compare-footer-wrap active position-" . esc_attr($footerBArPosition) . "'><div class='th-compare-footer-level2'><div class='th-compare-footer-level3'>" .
+                "<div class='th-compare-left'>
+                <p class='th-atleast'><span class='th-selected'>Selected</span><span class='th-select-count'>" . esc_html($th_product_atleast_txt) . "</span></p>" .
                 "<div class='product_image'>" . $footerProduct . "</div>" .
                  "<div class='th-addremove'><a href='#' class='th-add-product-bar'><i class='dashicons dashicons-plus'></i></a></div></div>" .
 
                 "<div class='th-compare-right'><a id='thpc-removeall'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-trash2 lucide-trash-2' aria-hidden='true'><path d='M10 11v6'></path><path d='M14 11v6'></path><path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6'></path><path d='M3 6h18'></path><path d='M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'></path></svg></a>" .
                 "<div class='th-compare-enable'><a href='#' class='th-compare-footer-product-opner'>" .
-                "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-layers text-indigo-600' aria-hidden='true'><path d='M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z'></path><path d='M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12'></path><path d='M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17'></path></svg><span class='text_'>" . esc_html__('Compare', 'th-product-compare-pro') . "</span></a></div></div></div></div></div>";
+                "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-layers text-indigo-600' aria-hidden='true'><path d='M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z'></path><path d='M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12'></path><path d='M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17'></path></svg><span class='text_'>" . esc_html__('Compare', 'th-product-compare') . "</span></a></div></div></div></div></div>";
    
 
     foreach ($initTitleAndRow as $initTitleAndRow_final_value) {
@@ -417,31 +467,53 @@ $initTitleAndRow = array_merge(
             if ($getRAtingHtml) {
                 $rating_ = $getRAtingHtml;
                 $rating_ .= "<div class='th-rating-count'>(";
-                $rating_ .= $product->get_rating_count() . __(' Review', 'th-product-compare');
+                $rating_ .= esc_html($product->get_rating_count()) . ' ' . esc_html__('Review', 'th-product-compare');
                 $rating_ .= ")</div>";
                 return $rating_;
             }
         }
     }
     // cookies
-    public function getPrevId()
-    {
-        $cookiesName = th_product_compare::cookieName();
-        if (isset($_COOKIE[$cookiesName]) && $_COOKIE[$cookiesName] != '') {
-            if (isset($_COOKIE[$cookiesName]) && $_COOKIE[$cookiesName] != '') {
-                $getPRoductId = sanitize_text_field($_COOKIE[$cookiesName]);
-                if ($getPRoductId) {
-                    $removeSlace = stripslashes($getPRoductId);
-                    $removeSlace = json_decode($removeSlace);
-                    $decodeArray = [];
-                    foreach ($removeSlace as $array_value) {
-                        $decodeArray[] = th_product_compare::th_decrypt($array_value);
-                    }
-                    return $decodeArray;
-                }
-            }
+  public function getPrevId() {
+
+    $cookiesName = th_product_compare::cookieName();
+
+    if ( empty( $_COOKIE[ $cookiesName ] ) ) {
+        return array();
+    }
+
+    /* -------- sanitize cookie -------- */
+    $cookie_value = sanitize_text_field(
+        wp_unslash( $_COOKIE[ $cookiesName ] )
+    );
+
+    if ( empty( $cookie_value ) ) {
+        return array();
+    }
+
+    /* -------- decode JSON safely -------- */
+    $decoded = json_decode( $cookie_value, true );
+
+    if ( ! is_array( $decoded ) ) {
+        return array();
+    }
+
+    /* -------- decrypt & validate -------- */
+    $decodeArray = array();
+
+    foreach ( $decoded as $value ) {
+
+        $product_id = th_product_compare::th_decrypt( $value );
+        $product_id = absint( $product_id );
+
+        if ( $product_id > 0 ) {
+            $decodeArray[] = $product_id;
         }
     }
+
+    return $decodeArray;
+}
+
     function setId_cookie($id, $addREmove)
     {
         $previousCookie = array();
