@@ -122,6 +122,7 @@ body{
     padding: 0;
     margin-right: 1.3rem;
     border-radius: 0;
+    margin-left: -20px;
 }
 .th-product-compare-wrap * {
   box-sizing: border-box;
@@ -314,7 +315,8 @@ label.color-output {
   font-size: 15px;
   align-items: center;
   grid-gap: 16px;
-  max-width: 579px;
+  width: 80%;
+  margin: 0 auto;
 }
 .th-compare-pro-feature .th-compare-banner .heading_{
   color: #111;
@@ -361,13 +363,17 @@ label.color-output {
   display: flex;
   flex-direction: column;
   grid-gap: 20px;
-  width: 780px;
+  width: 80%;
+  margin: 0 auto;
 }
 .th-compare-pro-feature .img-description .wrap_ .img_ {
-  margin-left: -23px;
+  background: #fff;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
 }
 .th-compare-pro-feature .img-description .wrap_ .img_ img {
-  max-width: 90%;
+  max-width: 100%;
 
 }
 .th-compare-pro-feature .img-description .wrap_ .description_ {
@@ -395,25 +401,38 @@ label.color-output {
 .x-gropup {
     display: flex;
     align-items: center;
+    justify-content: center;
     background-color: #2a2929;
-    color: #FFF;
-    padding: 2px 0px 1px 12px;
+    color: #FFF!important;
+    margin: 0 !important;
     color: #fff;
     line-height: normal;
     text-decoration: none;
     box-shadow: 0 0 0 0 #3b5998;
     transition: .3s ease;
-    border-radius: 58px;
-    width: 179px;
+    gap: 9px;
+    width: max-content;
+    padding: 0.4rem 1.5rem;
+    letter-spacing: -0.08px;
+    font-size: .6875rem;
+    line-height: 1.81818;
+    border-radius: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.059rem;
 }
 .x-gropup:hover{
   color: #FFF;
 }
-.x-image{
-  max-width: 54px;
+.x-gropup svg{
+  fill: currentColor;
 }
-.x-image img{
-  max-width: 100%;
+a.x-gropup svg{
+    fill: currentColor;
+    text-transform: capitalize;
+}
+
+a.x-gropup svg{
+    width: 18px;
 }
 .th-option-save-btn{
   background: #3070ff!important;
@@ -430,21 +449,6 @@ label.color-output {
 .th-compare-pro-feature .img_{
     position: relative;
 }
-.th-compare-pro-feature .img_:after{
-  content: 'Pro';
-    background: #b73838;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    border-radius: 100%;
-    width: 29px;
-    height: 29px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 12px;
-} 
 .compare-th_compare{
   font-size: 18px;
   line-height: 27px;
@@ -559,7 +563,7 @@ a.link_.upgrade-button::before {
   justify-content: space-between;
   align-items: center;
   background: #FFF;
-  padding: 0 21px;
+  padding: 9px 21px;
   border-bottom: 1px solid var(--border-color);
   margin-bottom: 21px;
   position: sticky;
@@ -595,8 +599,8 @@ a.link_.upgrade-button::before {
 .th-nav_ > a.active {
     color: var(--highlight-color);
     outline: 0;
-    border-color: var(--border-color);
-    background: #ffffff;
+    border-color: #E1F0FF;
+    background: #F8FAFC;
     /* -webkit-box-shadow: 0px 6px 6px rgb(53 66 134 / 10%);
     box-shadow: 0px 6px 6px rgb(53 66 134 / 10%); */
 }
@@ -631,20 +635,38 @@ a.link_.upgrade-button::before {
   justify-content: space-between;
   margin: 0 auto;
 }
-
-.th-option-save-btn{
-  background: var(--highlight-color)!important;
-  color: #FFF!important;
-  padding: 0 9px;
-  display: inline-flex!important;
+.top-header .th-save-btn{
+  display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f5f980;
+    padding: 0.25rem 0.54rem;
+    border: 1px solid;
+    border-color: rgb(226 232 240 / 0.5);
+    border-radius: 1.25rem;
 }
-.th-compare-reset-style-btn{
-  background: #FFF;
-  color: #111;
-  color: var(--text-color)!important;
-  border-color: var(--light-color)!important;
-  margin-right: 12px!important;
-  display: inline-flex!important;
+.th-save-btn button.th-option-save-btn{
+ display: flex;
+    align-items: center;
+    gap: 9px;
+    border: 0;
+    justify-content: center;
+    border-radius: 9px;
+    font-size: 0.75rem;
+    line-height: 1rem!important;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    letter-spacing: 0.1em;
+    background-color: var(--highlight-color) !important;
+    border-radius: 1.25rem !important;
+    color: #FFF !important;
+    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) 0px var(--tw-ring-offset-color);
+    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000) !important;
 }
 .th-plugin-common-wrap button{
   line-height: 2.15384615!important;
@@ -667,29 +689,30 @@ a.link_.upgrade-button::before {
     color: #aab2cb;
 }
 
-  .th-save-btn
-  button:before {
+  .th-save-btn button:before,
+  .th-reset-button button:before{
   font-family: "dashicons";
   height: unset;
   width: unset;
 }
-  .th-save-btn
-  button.loading:before {
+  .th-save-btn button.loading:before,
+  .th-reset-button button.loading:before{
   content: "\f463";
   animation: loaderTMK 0.8s linear 0s infinite forwards;
 }
 
-  .th-save-btn
-  button.loading {
+  .th-save-btn button.loading,
+  .th-reset-button button.loading{
   pointer-events: none;
   opacity: 0.5;
 }
-  .th-save-btn
-  button.th-compare-reset-style-btn:before {
+  .th-reset-button button.th-compare-reset-style-btn:before {
   content: "\f531";
-  margin-right: 9px;;
+  margin-right: 9px;
+  display: inline-flex;
 }
-.wp-core-ui .th-save-btn button{
+
+.wp-core-ui .th-reset-button button{
   border: 0;
   justify-content: center;
   border-radius: 9px;
@@ -818,7 +841,7 @@ a.link_.upgrade-button::before {
     z-index: 2;
     top: 32px;
     overflow-y: auto;
-    background: var(--body-background);
+    background: #FFF;
     padding-top: 10px;
 }
 .th-compare-radio.shop-archive{
@@ -924,7 +947,125 @@ a.link_.upgrade-button::before {
 .th-copy-btn.copied {
     background: #16a34a;
 }
+/*   Reset CSS Starts   */
+.reset-wrapper .page-wrapper {
+    max-width: 1200px;
+    margin: auto;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+}
+.reset-tab{
+    padding: 108px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+}
+.reset-tab p{
+    max-width: 718px;
+    text-align: center;
+    color: rgb(107 114 128 / 1);
+    font-size: .99rem;
+    line-height: 1.625;
+}
+.reset-tab *{
+    margin: 0;
+}
+.svg-wrapper svg{
+    color: rgb(239 68 68 / 1);
+}
+.svg-wrapper{
+    background-color: rgb(254 242 242 / 1);
+    border-radius: 100%;
+    width: 59px;
+    height: 59px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.reset-wrapper .reset-tab .th-compare-reset-style-btn{
+    color: rgb(220 38 38 /1);
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    background-color: rgb(254 242 242 / 1);
+    border-color: rgb(254 226 226 / 1);
+    border-radius: 9px;
+    transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    padding: 1rem 2rem;
+    font-weight: 700;
+    font-size: .99rem;
+    line-height: .75rem !important;
+    border: 1px solid transparent;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: flex;
+
+}
+.reset-wrapper .reset-tab .th-compare-reset-style-btn:hover{
+    background-color: rgb(254 226 226 / 1);
+    color: rgb(220 38 38 / 1);
+}
+.themehunk_page_th-product-compare .notice{
+  display: none!important;
+}
+/* Premium Green Upgrade Button */
+a[title="Get Premium Version"] {
+    position: relative;
+    display: inline-block;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    border-radius: 1.25rem;
+    background: linear-gradient(135deg, #00c853, #009127, #00bfa5);
+    background-size: 200% 200%;
+    box-shadow: 0 8px 25px rgba(0, 200, 83, 0.35);
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    animation: gradientMove 4s ease infinite;
+    margin-left: auto;
+    margin-right: 9px;
+    letter-spacing: .16rem;
+}
+
+/* Gradient Animation */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Hover Effect */
+a[title="Get Premium Version"]:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(0, 200, 83, 0.6);
+}
+
+/* Shine Effect */
+a[title="Get Premium Version"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.35);
+    transform: skewX(-25deg);
+    transition: 0.7s;
+}
+
+a[title="Get Premium Version"]:hover::before {
+    left: 125%;
+}
+/*   Reset CSS END  */
 @media screen and (max-width: 1024px){
   .th-plugin-common-wrap .th-left{
     width: 199px;
@@ -968,8 +1109,8 @@ a.link_.upgrade-button::before {
  .th-plugin-common-wrap .th-right{
   width: initial;
  }
- .wp-core-ui .th-save-btn button{
-  padding: 0 9px;
+ a[title="Get Premium Version"]{
+  font-size: 10px;
  }
  .top-header{
   top: 45px;
@@ -1031,9 +1172,6 @@ a.link_.upgrade-button::before {
   .th-compare-pro-feature .img-description .wrap_ .img_{
     margin-left: initial;
   }
-  .th-compare-pro-feature .img-description .wrap_{
-    width: initial;
-  }
   .th-compare-pro-feature .th-compare-banner{
     flex-direction: column;
   }
@@ -1089,6 +1227,12 @@ a.link_.upgrade-button::before {
   }
   .th-plugin-common-wrap .logo-detail{
     margin-left: 9px;
+  }
+  .reset-tab{
+    padding: 27px;
+  }
+  .th-compare-pro-feature .th-compare-banner{
+    flex-direction: column;
   }
 }
 
