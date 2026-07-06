@@ -1,6 +1,6 @@
 <?php
  return array(
-    'vayu-blocks' => array(
+      'vayu-blocks' => array(
         'name' => esc_html__('Vayu Blocks', 'th-product-compare'),
         'img' => 'icon-128x128.png',
         'admin_link' =>   'vayu-blocks',
@@ -41,7 +41,7 @@
         'admin_link' =>   'th-product-compare',
         'pro-plugin' => array(
             'init' => 'th-product-compare-pro/th-product-compare-pro.php',
-            'admin_link' => 'th-product-compare',
+            'admin_link' => 'tpcp-product-compare',
             'docs' => esc_url('https://themehunk.com/docs/th-product-compare/'),
         )
     ),
@@ -81,5 +81,5 @@
             'admin_link' => 'wppb',
             'docs' => esc_url('https://themehunk.com/docs/wp-popup-builder-pro/'),
         )
-    ),
+    )
 );
